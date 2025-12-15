@@ -100,10 +100,10 @@ namespace {
  *
  * Strategy: SEPARATE tensor arenas for each model
  *
- * Memory usage:
- *   SCRFD arena:        220 KB (actual ~201 KB)
- *   MobileFaceNet arena: 200 KB (smaller than GhostFaceNet)
- *   Total:              420 KB (fits in 1.9 MB SRAM)
+ * Memory usage (Vela 3.9.0):
+ *   SCRFD arena:        220 KB (Vela: 201 KB)
+ *   MobileFaceNet arena: 700 KB (Vela: 600 KB)
+ *   Total:              920 KB
  */
 constexpr int scrfd_arena_size = SCRFD_ARENA_SIZE;
 constexpr int mobilefacenet_arena_size = MOBILEFACENET_ARENA_SIZE;

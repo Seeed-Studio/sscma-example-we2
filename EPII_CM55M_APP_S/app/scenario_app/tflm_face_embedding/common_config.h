@@ -74,16 +74,15 @@
  *
  * Tensor arena allocation for dual-model inference.
  *
- * Memory usage (from Vela 3.12.0 compilation):
- *   - SCRFD: 220 KB (same as face_recognition)
- *   - MobileFaceNet: 1200 KB (Vela reports 1176 KB SRAM)
- *   - Total: 1420 KB
+ * Memory usage (from Vela 3.9.0 compilation):
+ *   - SCRFD: 201 KB (Vela reports 200.81 KB)
+ *   - MobileFaceNet: 600 KB (Vela reports 599.77 KB)
+ *   - Total: ~820 KB
  *
- * Note: sirius-ai MobileFaceNet (99.25% LFW) requires significantly more
- * SRAM than GhostFaceNet due to different architecture (more activations).
+ * Note: TFLite Micro runtime needs ~10-20% overhead beyond Vela report.
  */
-#define SCRFD_ARENA_SIZE                (220 * 1024)    /* 220 KB for face detection */
-#define MOBILEFACENET_ARENA_SIZE        (1200 * 1024)   /* 1200 KB for face embedding (Vela: 1176 KB) */
+#define SCRFD_ARENA_SIZE                (220 * 1024)    /* 220 KB for face detection (Vela: 201 KB) */
+#define MOBILEFACENET_ARENA_SIZE        (700 * 1024)    /* 700 KB for face embedding (Vela: 600 KB) */
 
 /* Legacy define for total reference */
 #define TENSOR_ARENA_SIZE               (SCRFD_ARENA_SIZE + MOBILEFACENET_ARENA_SIZE)

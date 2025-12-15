@@ -17,19 +17,23 @@ Face Embedding 应用 - 使用 SCRFD + MobileFaceNet 进行人脸检测和 128 �
 
 ## 模型规格
 
-| 模型 | 输入尺寸 | 输出 | NPU 加速 | SRAM |
-|------|----------|------|----------|------|
-| SCRFD-500M-KPS | 160x160 RGB | Bbox + 5 landmarks | 100% | 220 KB |
-| MobileFaceNet (foamliu) | 112x112 RGB | 128D embedding | 100% | 1200 KB |
+| 模型 | 输入尺寸 | 输出 | NPU 加速 | Vela SRAM | Arena 配置 |
+|------|----------|------|----------|-----------|------------|
+| SCRFD-500M-KPS | 160x160 RGB | Bbox + 5 landmarks | 100% | 201 KB | 220 KB |
+| MobileFaceNet (foamliu) | 112x112 RGB | 128D embedding | 100% | 600 KB | 700 KB |
 
 **精度**: MobileFaceNet 在 LFW 数据集达到 99.25%
+
+**推理时间** (Ethos-U55 @ 500MHz):
+- SCRFD: ~4.4 ms
+- MobileFaceNet: ~14.8 ms
 
 ## Flash 地址
 
 | 模型 | 地址 | 大小 |
 |------|------|------|
-| SCRFD | 0x200000 | ~600 KB |
-| MobileFaceNet | 0x400000 | ~1.2 MB |
+| SCRFD | 0x200000 | 700 KB |
+| MobileFaceNet | 0x400000 | 1.1 MB |
 
 ## 快速开始
 
@@ -174,10 +178,13 @@ uv run python backend/main.py
 
 ```
 SRAM1 (0x340E0000, 1.125 MB tensor arena):
-├── SCRFD arena:        220 KB
-└── MobileFaceNet arena: 1200 KB
-    总计:                1420 KB
+├── SCRFD arena:         220 KB (Vela: 201 KB)
+└── MobileFaceNet arena: 700 KB (Vela: 600 KB)
+    总计:                920 KB
 ```
+
+> **优化说明**: 基于 Vela 3.9.0 编译报告，MobileFaceNet 实际仅需 600 KB SRAM，
+> 配置 700 KB 留有 ~15% 余量供 TFLite Micro 运行时使用。
 
 ## 与其他应用的对比
 
@@ -187,7 +194,7 @@ SRAM1 (0x340E0000, 1.125 MB tensor arena):
 | Embedding 模型 | MobileFaceNet 128D | 无 |
 | 输出维度 | 128D | N/A |
 | 主要用途 | 人脸识别 | 人脸检测 |
-| SRAM 需求 | 1420 KB | ~220 KB |
+| SRAM 需求 | 920 KB | ~220 KB |
 
 ## 模型文件
 
