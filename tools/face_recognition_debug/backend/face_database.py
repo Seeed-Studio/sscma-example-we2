@@ -26,6 +26,9 @@ class FaceDatabase:
         self.db_path = db_path
         self.lock = threading.Lock()
         self._init_db()
+        # For tracking embedding stability
+        self._last_embedding: Optional[np.ndarray] = None
+        self._frame_count = 0
 
     def _init_db(self):
         """Initialize database tables"""
@@ -104,19 +107,34 @@ class FaceDatabase:
                 ))
             return faces
 
-    def recognize(self, embedding: np.ndarray, threshold: float = 0.8) -> Tuple[Optional[str], float]:
+    def recognize(self, embedding: np.ndarray, threshold: float = 0.6, debug: bool = True) -> Tuple[Optional[str], float]:
         """
         Recognize a face by comparing embedding with database
 
         Args:
             embedding: Face embedding (128D or 512D)
             threshold: Minimum cosine similarity for positive match
+            debug: Print debug info
 
         Returns:
             Tuple of (name, similarity) or (None, 0) if no match
         """
+        # Check input
+        input_norm = np.linalg.norm(embedding)
+
+        # Track frame-to-frame stability
+        self._frame_count += 1
+        frame_sim = 0.0
+        if self._last_embedding is not None and len(embedding) == len(self._last_embedding):
+            norm_emb = embedding / input_norm
+            frame_sim = float(np.dot(norm_emb, self._last_embedding))
+
+        if debug:
+            print(f"\n[Frame {self._frame_count}] norm={input_norm:.4f}, frame_sim={frame_sim:.4f}, "
+                  f"first3={embedding[:3].round(3).tolist()}")
+
         # Normalize input
-        embedding = embedding / np.linalg.norm(embedding)
+        embedding = embedding / input_norm
         input_dim = len(embedding)
 
         faces = self.get_all_faces()
@@ -126,6 +144,9 @@ class FaceDatabase:
         best_match = None
         best_similarity = -1.0
 
+        if debug:
+            print(f"[Recognize] Comparing with {len(faces)} faces in database:")
+
         for face in faces:
             # Skip faces with different embedding dimensions
             if len(face.embedding) != input_dim:
@@ -134,9 +155,15 @@ class FaceDatabase:
             # Cosine similarity (both vectors are normalized)
             similarity = float(np.dot(embedding, face.embedding))
 
+            if debug:
+                print(f"  - {face.name}: sim={similarity:.4f} {'✓' if similarity >= threshold else '✗'}")
+
             if similarity > best_similarity:
                 best_similarity = similarity
                 best_match = face.name
+
+        # Save normalized embedding for next frame comparison
+        self._last_embedding = embedding.copy()
 
         if best_similarity >= threshold:
             return best_match, best_similarity
