@@ -126,6 +126,30 @@ int main(void)
 }
 #endif
 
+#ifdef TFLM_FACE_RECOGNITION
+#include "tflm_face_recognition.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_FACE_EMBEDDING
+#include "tflm_face_embedding.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
 
 #ifdef FATFS_TEST
 #include "fatfs_test.h"

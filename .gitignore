@@ -39,3 +39,11 @@ we2_image_gen_local/Images*.txt
 *.img
 
 .vscode/
+model_zoo/tflm_face_recognition/calibration_data/
+*.DS_Store
+*.log
+*.bin
+*.pb
+.venv/
+debug_output/
+*.jpg
