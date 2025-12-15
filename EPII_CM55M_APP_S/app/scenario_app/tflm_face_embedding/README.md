@@ -2,6 +2,12 @@
 
 Face Embedding 应用 - 使用 SCRFD + MobileFaceNet 进行人脸检测和 128 维特征提取。
 
+## Demo
+
+![Face Recognition Debug Tool](face_rec_grove.gif)
+
+*Web 调试工具实时演示：人脸检测 + 关键点 + 特征提取 + 身份识别*
+
 ## 功能特点
 
 - **人脸检测**: SCRFD-500M-KPS 多尺度检测 + 5 点关键点
