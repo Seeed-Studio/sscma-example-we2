@@ -1,0 +1,16 @@
+[project]
+name = "face-recognition-debug"
+version = "0.1.0"
+description = "Web debug tool for Grove Vision AI face recognition"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "websockets>=12.0",
+    "pyserial>=3.5",
+    "numpy>=1.24.0",
+]
+
+[project.scripts]
+face-debug = "backend.main:main"

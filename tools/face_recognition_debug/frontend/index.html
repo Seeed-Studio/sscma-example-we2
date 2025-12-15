@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Debug Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Face Recognition Debug Tool</h1>
+            <div class="connection-status" id="connectionStatus">
+                <span class="status-dot disconnected"></span>
+                <span class="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="video-section">
+                <div class="canvas-container">
+                    <canvas id="videoCanvas" width="640" height="480"></canvas>
+                    <div class="overlay" id="overlay"></div>
+                </div>
+                <div class="video-info" id="videoInfo">
+                    <span>Resolution: --</span>
+                    <span>FPS: --</span>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <section class="panel-section">
+                    <h2>Connection</h2>
+                    <div class="form-group">
+                        <label for="portSelect">Serial Port:</label>
+                        <select id="portSelect">
+                            <option value="">Select port...</option>
+                        </select>
+                        <button id="refreshPorts" class="btn-secondary">Refresh</button>
+                    </div>
+                    <div class="form-group">
+                        <button id="connectBtn" class="btn-primary">Connect</button>
+                        <button id="disconnectBtn" class="btn-secondary" disabled>Disconnect</button>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h2>Face Enrollment</h2>
+                    <div class="form-group">
+                        <label for="enrollName">Name:</label>
+                        <input type="text" id="enrollName" placeholder="Enter name...">
+                    </div>
+                    <div class="form-group">
+                        <button id="enrollBtn" class="btn-primary" disabled>Start Enrollment (5s)</button>
+                        <button id="cancelEnrollBtn" class="btn-secondary" disabled>Cancel</button>
+                    </div>
+                    <div class="enrollment-progress" id="enrollmentProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Collecting samples...</div>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h2>Face Database</h2>
+                    <div class="database-list" id="databaseList">
+                        <p class="empty-message">No faces enrolled</p>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h2>Recognition Result</h2>
+                    <div class="recognition-result" id="recognitionResult">
+                        <div class="result-name">--</div>
+                        <div class="result-confidence">Confidence: --</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="enrollModal" style="display: none;">
+        <div class="modal-content">
+            <h3>Face Enrollment</h3>
+            <p>Look at the camera and keep your face centered.</p>
+            <div class="countdown" id="countdown">5</div>
+            <button id="modalCancelBtn" class="btn-secondary">Cancel</button>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
