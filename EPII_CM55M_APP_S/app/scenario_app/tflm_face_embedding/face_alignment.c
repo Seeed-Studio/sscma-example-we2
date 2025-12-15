@@ -163,9 +163,10 @@ void apply_face_alignment(
      */
 
     int src_plane_size = src_w * src_h;
-    const uint8_t* r_plane = src_image;
+    /* BGR planar: plane order is B, G, R */
+    const uint8_t* b_plane = src_image;
     const uint8_t* g_plane = src_image + src_plane_size;
-    const uint8_t* b_plane = g_plane + src_plane_size;
+    const uint8_t* r_plane = g_plane + src_plane_size;
 
     /* Compute inverse transform for backward mapping */
     affine_transform_t inv_transform;
@@ -184,11 +185,6 @@ void apply_face_alignment(
             /* Backward map: find source coordinates for this destination pixel */
             float sx = inv_a * dx + inv_b * dy + inv_c;
             float sy = inv_d * dx + inv_e * dy + inv_f;
-
-            /* 180-degree rotation: Sample from inverted source (Native Image) */
-            /* This ensures the aligned face is upright even if source is inverted */
-            sx = src_w - 1.0f - sx;
-            sy = src_h - 1.0f - sy;
 
             /* Destination pixel index (RGB interleaved) */
             int dst_idx = (dy * ALIGNED_FACE_WIDTH + dx) * 3;

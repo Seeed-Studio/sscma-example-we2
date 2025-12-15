@@ -42,23 +42,23 @@ For 160x160 input:
 
 ## Decoding
 
-### Important: Different Reference Points
+### Reference Points
 
-**Box and Keypoints use DIFFERENT reference points:**
+**Box and Keypoints use the SAME reference point (anchor corner):**
 
 | Output | Reference Point | Formula |
 |--------|-----------------|---------|
-| Box    | Anchor **center** | `(ax + 0.5) * stride` |
+| Box    | Anchor **corner** | `ax * stride` |
 | Keypoints | Anchor **corner** | `ax * stride` |
 
 ### Box Decoding
 
-Box output format: `[left, top, right, bottom]` as distances from anchor center.
+Box output format: `[left, top, right, bottom]` as distances from anchor corner.
 
 ```python
-# Anchor center (with 0.5 offset)
-cx = (ax + 0.5) * stride
-cy = (ay + 0.5) * stride
+# Anchor corner (no offset)
+cx = ax * stride
+cy = ay * stride
 
 # Box decoding
 x1 = cx - box[0] * stride  # left edge
@@ -164,9 +164,9 @@ def decode_scrfd(outputs, input_size=160, score_threshold=0.5):
 
             ax, ay = anchors[i]
 
-            # Box: use anchor CENTER
-            cx = (ax + 0.5) * stride
-            cy = (ay + 0.5) * stride
+            # Both box and keypoints use anchor CORNER
+            cx = ax * stride
+            cy = ay * stride
 
             box = boxes[i]
             x1 = cx - box[0] * stride
@@ -180,7 +180,7 @@ def decode_scrfd(outputs, input_size=160, score_threshold=0.5):
                 'keypoints': None
             }
 
-            # Keypoints: use anchor CORNER (no +0.5)
+            # Keypoints: also use anchor CORNER
             if kps is not None:
                 kp = kps[i]
                 landmarks = []
@@ -221,7 +221,7 @@ The int8 model produces nearly identical results to float32.
 
 ## Common Mistakes
 
-1. **Using same reference for box and keypoints**: Box uses anchor center (+0.5), keypoints use anchor corner (no offset)
+1. **Using different references for box and keypoints**: Both should use anchor corner (no +0.5 offset)
 
 2. **Wrong anchor order**: Anchors iterate as `for y: for x: [anchor1, anchor2]`
 

@@ -108,7 +108,6 @@
 #define DATA_TYPE_FACE_EMBEDDING        0xA0
 
 /* Enable face alignment (recommended for best accuracy) */
-/* TODO: Fix alignment for RGB planar input - disabled for now to avoid crash */
-#define ENABLE_FACE_ALIGNMENT           0
+#define ENABLE_FACE_ALIGNMENT           1
 
 #endif /* SCENARIO_TFLM_FACE_EMBEDDING_COMMON_CONFIG_H_ */

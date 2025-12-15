@@ -764,7 +764,18 @@ int cv_face_embedding_run(struct_algoResult *alg_result, face_embedding_msg_t *e
         (uint8_t *)aligned_face_img,
         &align_transform);
 
-    memcpy(emb_input->data.uint8, (uint8_t *)aligned_face_img, aligned_face_buffer_size);
+    /* Copy to embedding input tensor - handle INT8 vs UINT8 */
+    if (emb_input->type == kTfLiteInt8) {
+        uint8_t *src = (uint8_t *)aligned_face_img;
+        int8_t *dst = emb_input->data.int8;
+        for (int i = 0; i < aligned_face_buffer_size; i++) {
+            dst[i] = (int8_t)((int)src[i] - 128);
+        }
+        DBG_VERBOSE("  Embedding input ready (INT8, aligned)\n");
+    } else {
+        memcpy(emb_input->data.uint8, (uint8_t *)aligned_face_img, aligned_face_buffer_size);
+        DBG_VERBOSE("  Embedding input ready (UINT8, aligned)\n");
+    }
 #else
     /* Fallback: simple resize of full frame to 112x112 */
     DBG_VERBOSE("  Step 4: Resizing for embedding (no alignment)...\n");

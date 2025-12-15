@@ -304,9 +304,10 @@ std::forward_list<scrfd_face> scrfd_detect(
                     float d_right = dequantize(branch->bbox_data[bbox_base + 2], branch->bbox_scale, branch->bbox_zp);
                     float d_bottom = dequantize(branch->bbox_data[bbox_base + 3], branch->bbox_scale, branch->bbox_zp);
 
-                    /* Anchor center in input coordinates */
-                    float cx = (w + 0.5f) * stride;
-                    float cy = (h + 0.5f) * stride;
+                    /* Anchor corner in input coordinates
+                     * Use anchor CORNER (w*stride), consistent with landmarks */
+                    float cx = w * stride;
+                    float cy = h * stride;
 
                     /*
                      * Distance-based bbox decoding
@@ -348,8 +349,7 @@ std::forward_list<scrfd_face> scrfd_detect(
                     det.score = score;
 
                     /* Decode 5-point landmarks - kps tensor is [N, 10]
-                     * Note: Landmarks use anchor CORNER (w*stride),
-                     * NOT anchor center like bbox. This is different from box decoding! */
+                     * Landmarks use anchor CORNER (w*stride), same as bbox */
                     int kps_base = row_idx * 10;
                     for (int k = 0; k < SCRFD_NUM_LANDMARKS; k++) {
                         float kp_dx = dequantize(
