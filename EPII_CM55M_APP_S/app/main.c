@@ -126,6 +126,30 @@ int main(void)
 }
 #endif
 
+#ifdef TFLM_FACE_RECOGNITION
+#include "tflm_face_recognition.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_FACE_EMBEDDING
+#include "tflm_face_embedding.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
 
 #ifdef FATFS_TEST
 #include "fatfs_test.h"
@@ -148,6 +172,18 @@ int main(void)
 {
 	board_init();
 	tflm_yolov8_od_app();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_YOLOV8_GENDER_CLS
+#include "tflm_yolov8_gender_cls.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_yolov8_gender_cls_app();
 	return 0;
 }
 #endif
