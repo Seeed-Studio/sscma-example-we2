@@ -57,12 +57,12 @@
 /*
  * MobileFaceNet Embedding Model Configuration
  *
- * sirius-ai MobileFaceNet specifications:
- *   - Source: https://github.com/sirius-ai/MobileFaceNet_TF
+ * foamliu MobileFaceNet specifications:
+ *   - Source: https://github.com/foamliu/MobileFaceNet
  *   - Input: 112x112 RGB (aligned face, normalized to [-1,1])
  *   - Output: 128-dimensional embedding (L2 normalized)
  *   - Accuracy: 99.25% LFW
- *   - Inference: ~105ms on Ethos-U55 (99.6% NPU, 0.4% CPU)
+ *   - Inference: 100% NPU on Ethos-U55
  */
 #define EMBEDDING_INPUT_WIDTH           112
 #define EMBEDDING_INPUT_HEIGHT          112
