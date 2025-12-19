@@ -16,7 +16,7 @@
 set -e
 
 # Configuration
-PROJECT_ROOT="/Users/harvest/project/Seeed_Grove_Vision_AI_Module_V2"
+PROJECT_ROOT="$(pwd)"
 APP_DIR="${PROJECT_ROOT}/EPII_CM55M_APP_S"
 IMAGE_GEN_DIR="${PROJECT_ROOT}/we2_image_gen_local"
 OUTPUT_DIR="${IMAGE_GEN_DIR}/output_case1_sec_wlcsp"
@@ -103,7 +103,28 @@ echo "[2/3] Generating firmware image..."
 echo "----------------------------------------"
 cd "${IMAGE_GEN_DIR}"
 cp "${ELF_FILE}" input_case1_secboot/
-./we2_local_image_gen_macOS_arm64 project_case1_blp_wlcsp.json
+
+# Determine the correct image generation tool based on the OS
+OS_NAME=$(uname -s)
+IMAGE_GEN_TOOL=""
+case "${OS_NAME}" in
+    Darwin*)
+        IMAGE_GEN_TOOL="./we2_local_image_gen_macOS_arm64"
+        ;;
+    Linux*)
+        IMAGE_GEN_TOOL="./we2_local_image_gen"
+        ;;
+    MINGW*|MSYS*|CYGWIN*)
+        IMAGE_GEN_TOOL="./we2_local_image_gen.exe"
+        ;;
+    *)
+        echo "Unsupported OS: ${OS_NAME}"
+        exit 1
+        ;;
+esac
+
+echo "Using image generation tool: ${IMAGE_GEN_TOOL}"
+${IMAGE_GEN_TOOL} project_case1_blp_wlcsp.json
 
 # Verify output image
 OUTPUT_IMG="${OUTPUT_DIR}/output.img"

@@ -14,7 +14,7 @@
 set -e
 
 # Configuration
-PROJECT_ROOT="/Users/harvest/project/Seeed_Grove_Vision_AI_Module_V2"
+PROJECT_ROOT="$(pwd)"
 OUTPUT_IMG="${PROJECT_ROOT}/we2_image_gen_local/output_case1_sec_wlcsp/output.img"
 
 # Model paths

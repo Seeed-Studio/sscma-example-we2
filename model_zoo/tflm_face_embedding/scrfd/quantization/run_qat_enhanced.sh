@@ -26,7 +26,7 @@ if [ ! -f "scrfd_500m_kps.pth" ]; then
 fi
 
 # 检查 MS1M 数据集
-MS1M_DIR="/Users/harvest/project/datasets/ms1m-arcface"
+MS1M_DIR="./datasets/ms1m-arcface"
 if [ ! -d "$MS1M_DIR" ]; then
     echo "MS1M-ArcFace 数据集未找到: $MS1M_DIR"
     echo "将回退到 LFW 数据集"

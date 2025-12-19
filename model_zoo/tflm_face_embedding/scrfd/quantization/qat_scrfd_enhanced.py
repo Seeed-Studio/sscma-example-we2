@@ -67,7 +67,7 @@ except ImportError:
 SCRIPT_DIR = Path(__file__).parent.resolve()
 PTH_FILE = str(SCRIPT_DIR / "scrfd_500m_kps.pth")
 ONNX_REF = str(SCRIPT_DIR / "scrfd_500m_kps.onnx")
-MS1M_DIR = "/Users/harvest/project/datasets/ms1m-arcface"
+MS1M_DIR = "./datasets/ms1m-arcface"
 LFW_DIR = str(SCRIPT_DIR / "calibration_data/lfw/lfw-deepfunneled")
 INPUT_SIZE = 160
 
