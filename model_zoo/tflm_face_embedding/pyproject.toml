@@ -1,0 +1,20 @@
+[project]
+name = "face-embedding"
+version = "0.2.0"
+description = "Face embedding model conversion for Ethos-U55 NPU (SCRFD + GhostFaceNet/MobileFaceNet)"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "gdown>=5.2.0",
+    "numpy>=1.26.0",
+    "onnx==1.16.0",
+    "onnx2tf==1.25.0",
+    "onnxruntime==1.20.1",
+    "opencv-python==4.9.0.80",
+    "pillow>=10.0.0",
+    "tensorflow==2.19.0",
+    "tensorflow-model-optimization>=0.8.0",
+    "tf-keras>=2.19.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "tqdm>=4.65.0",
+]

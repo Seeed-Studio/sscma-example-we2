@@ -1,8 +1,50 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Various build files
+EPII_CM55M_APP_S/obj_*/**
+we2_image_gen_local/output_*/**
+we2_image_gen_local/Images*.txt
+we2_image_gen_local/secureboot_tool/*
+*.elf
+*.map
+*.img
+
 # macOS
 .DS_Store
+*.DS_Store
 
 # VScode
-.vscode
+.vscode/
 
 # Logs
 *.log
@@ -18,4 +60,10 @@ we2_image_gen_local/output_case1_sec_wlcsp/**
 we2_image_gen_local/Images_ForSendData.txt
 we2_image_gen_local/Images.txt
 
-*.img
+# Project specific
+model_zoo/tflm_face_recognition/calibration_data/
+*.bin
+*.pb
+.venv/
+debug_output/
+*.jpg
