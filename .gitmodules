@@ -7,3 +7,9 @@
 [submodule "EPII_CM55M_APP_S/library/cmsis_cv/CMISI-CV"]
 	path = EPII_CM55M_APP_S/library/cmsis_cv/CMISI-CV
 	url = https://github.com/ARM-software/CMSIS-CV.git
+[submodule "nomi_host"]
+	path = nomi_host
+	url = https://github.com/freddy4212/nomi_host.git
+[submodule "nomi_evaluation"]
+	path = nomi_evaluation
+	url = https://github.com/freddy4212/nomi_evaluation.git
