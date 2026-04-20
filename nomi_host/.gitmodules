@@ -1,3 +1,0 @@
-[submodule "observation_layer/mmaction2"]
-	path = observation_layer/mmaction2
-	url = https://github.com/open-mmlab/mmaction2.git

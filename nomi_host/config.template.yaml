@@ -1,3 +1,0 @@
-llm:
-  api_key: "YOUR_GEMINI_API_KEY"
-  model_name: "models/gemini-3-flash-preview"

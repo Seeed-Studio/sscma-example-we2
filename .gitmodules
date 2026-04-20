@@ -7,6 +7,3 @@
 [submodule "EPII_CM55M_APP_S/library/cmsis_cv/CMISI-CV"]
 	path = EPII_CM55M_APP_S/library/cmsis_cv/CMISI-CV
 	url = https://github.com/ARM-software/CMSIS-CV.git
-[submodule "nomi_host/observation_layer/mmaction2"]
-	path = nomi_host/observation_layer/mmaction2
-	url = https://github.com/open-mmlab/mmaction2.git
